@@ -55,7 +55,19 @@ diasNormales medidaDia1 medidaDia2 medidaDia3 = not(diasParejos medidaDia1 medid
 --   |numero == 
 
 -------------------------------------------COMPOSICION----------------------------
+{-
+Usá composición para:
 
+eliminar parámetros explícitos,
+
+expresar transformaciones de datos,
+
+mostrar comprensión del paradigma funcional (la cátedra lo valora mucho),
+
+escribir funciones pequeñas y reutilizables.
+
+REGLA DE ORO: Usar composicion su la funcion transforma puramente valores. NO FORZAR si la logica requiere CONDICIONES, COMPARACIONES O RAMIFICACION
+-}
 siguiente = (+1)
 
 mitad = (/2)
@@ -139,4 +151,15 @@ frecuenciasHastaMomento = flip take frecuenciaCardiaca . calcularMinuto
 
 esCapicua listas =  listaCompleta == reverse listaCompleta
     where listaCompleta = concat listas
+
+-------------------------------------------ORDEN SUPERIOR----------------------------
+existsAny funcionBool (a,b,c)= funcionBool a  || funcionBool b || funcionBool c
+
+mejor f1 f2 numero = max (f1 numero) (f2 numero)
+
+aplicarPar f1 (a,b)=(f1 a, f1 b)
+
+parDeFns f1 f2 valor = (f1 valor, f2 valor)
+
+-------------------------------------------ORDEN SUPERIOR + LISTAS----------------------------
 
