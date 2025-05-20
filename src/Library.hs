@@ -1,6 +1,7 @@
 module Library where
 import PdePreludat
 import Data.Int (Int)
+import GHC.Read (list)
 
 --El costo de estacionamiento es de 50 pesos la hora, con un mínimo de 2 horas”, esto significa que
 --si estamos 1 hora, nos cobrarán por 2 horas
@@ -163,3 +164,53 @@ parDeFns f1 f2 valor = (f1 valor, f2 valor)
 
 -------------------------------------------ORDEN SUPERIOR + LISTAS----------------------------
 
+esMultiploDeAlguno n = any (esMultiploDe n)
+
+promedios = map promedioFrecuenciaCardiaca
+
+--promediosSinAplazos = map promedioFrecuenciaCardiaca . filter (<4) 
+
+
+
+promediosSinAplazos= map (promedioFrecuenciaCardiaca.filter (>3)) --JODIDO
+
+mejoresNotas :: [[Number]]->[Number]
+mejoresNotas = map maximum
+
+aprobo' = all (5<)
+
+aprobaron = filter aprobo'
+
+sumaF :: [Number->Number] -> Number -> Number
+sumaF [] n = 0
+sumaF (funcion : funciones) n = funcion n + sumaF funciones n
+
+
+sumaF' funciones n = foldr (\funcion -> (+) (funcion n)) 0 funciones
+
+aplicarFunciones funciones n = map (\funcion -> funcion n) funciones
+
+subirHabilidad levelUp = map calcularNivelValido
+    where calcularNivelValido habilidad 
+            |(habilidad+levelUp)>12 = 12
+            |otherwise= habilidad+levelUp
+
+flimitada f = max 0 . min 12 . f 
+
+cambiarHabilidad f= map (flimitada f)
+
+-- cambiarHabilidad (max 4) [2,4,5,3,8]
+
+crecimientoAnual edad
+    |1<edad && edad<10 = 24 -(edad*2)
+    |10<=edad && edad <=15 = 4
+    |16<=edad || edad <=17 = 2
+    |18<=edad || edad<=19 = 1
+    |otherwise=0
+
+crecimientoEntreEdades edad1 edad2= sum $ map crecimientoAnual [min edad1 edad2 .. max edad1 edad2 -1] 
+
+alturasEnUnAnio :: Number-> [Number] -> [Number]
+alturasEnUnAnio edad = map (+(crecimientoAnual (edad+1)))
+
+alturaEnEdades altura edad = map (\edadFutura -> altura + crecimientoEntreEdades edad edadFutura)
